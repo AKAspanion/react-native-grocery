@@ -11,9 +11,7 @@ export const setOnboardFlag = async () => {
 export const getOnboardFlag = async () => {
   try {
     const value = await AsyncStorage.getItem("@onBoarding");
-    if (value !== null) {
-      // value previously stored
-    }
+    return value;
   } catch (error) {
     console.log(error);
   }
