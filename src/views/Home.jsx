@@ -1,25 +1,42 @@
-import React, { useCallback } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { Button, StyleSheet, Text, View } from "react-native";
+import React from "react";
+import { StyleSheet, View, Image } from "react-native";
+import { TouchableOpacity } from "react-native-gesture-handler";
+import { SharedElement } from "react-navigation-shared-element";
 
-import { increment, decrement } from "../store/actions/counter";
-
-export default function Home() {
-  const dispatch = useDispatch();
-  const state = useSelector((state) => state.countState);
-
-  const incrementCounter = useCallback(() => dispatch(increment()), [dispatch]);
-  const decrementCounter = useCallback(() => dispatch(decrement()), [dispatch]);
-
+export default function Home({ navigation }) {
   return (
-    <View>
-      <Text style={{ padding: 24 }}>
-        Learning to add redux inside react-native, {state.count}
-      </Text>
-      <View style={{ padding: 24 }}>
-        <Button title="increment" onPress={() => incrementCounter()}></Button>
-      </View>
-      <Button title="decrement" onPress={() => decrementCounter()}></Button>
+    <View style={styles.container}>
+      <TouchableOpacity
+        onPress={() => {
+          navigation.push("Detail", { item: { id: 1, name: "ABC" } });
+        }}
+      >
+        <SharedElement id={`item.${1}.photo`}>
+          <Image
+            style={styles.box}
+            source={{
+              uri:
+                "https://lh3.googleusercontent.com/a-/AAuE7mBL0Hh_wKgNlXtZks9XqIU3uv-j3COoKuYysLS_Svg",
+            }}
+          />
+        </SharedElement>
+      </TouchableOpacity>
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    fontSize: 120,
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  box: {
+    width: 200,
+    height: 200,
+    borderRadius: 100,
+    backgroundColor: "turquoise",
+  },
+});

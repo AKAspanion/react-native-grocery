@@ -9,19 +9,23 @@
   },
   "dependencies": {
     "@react-native-community/async-storage": "^1.12.1",
+    "@react-native-community/masked-view": "0.1.10",
+    "@react-navigation/native": "^5.0.9",
+    "@react-navigation/stack": "^5.1.1",
     "@reduxjs/toolkit": "^1.4.0",
     "expo": "~39.0.2",
     "expo-status-bar": "~1.0.2",
     "react": "16.13.1",
     "react-dom": "16.13.1",
     "react-native": "https://github.com/expo/react-native/archive/sdk-39.0.2.tar.gz",
-    "react-native-web": "~0.13.12",
-    "react-redux": "^7.2.1",
     "react-native-gesture-handler": "~1.7.0",
     "react-native-reanimated": "~1.13.0",
-    "react-native-screens": "~2.10.1",
     "react-native-safe-area-context": "3.1.4",
-    "@react-native-community/masked-view": "0.1.10"
+    "react-native-screens": "~2.10.1",
+    "react-native-shared-element": "^0.7.0",
+    "react-native-web": "~0.13.12",
+    "react-navigation-shared-element": "^5.0.0-alpha1",
+    "react-redux": "^7.2.1"
   },
   "devDependencies": {
     "@babel/core": "~7.9.0"

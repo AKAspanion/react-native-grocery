@@ -1,10 +1,13 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { View, Text, StyleSheet } from "react-native";
+import { NavigationContainer } from "@react-navigation/native";
+import { createSharedElementStackNavigator } from "react-navigation-shared-element";
 
-import { Home, OnBoarding } from "../views";
+import { Home, ItemDetail } from "../views";
 import { setOnBoarded } from "../store/actions/flags";
 import { getOnboardFlag } from "../services";
+
+const Stack = createSharedElementStackNavigator();
 
 export default function MainContainer() {
   const dispatch = useDispatch();
@@ -22,18 +25,32 @@ export default function MainContainer() {
   }, []);
 
   return (
-    <View style={styles.container}>
-      {state.flagsState.onBoarded ? <Home /> : <OnBoarding />}
-    </View>
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="Home" headerMode="none">
+        <Stack.Screen name="List" component={Home} />
+        <Stack.Screen
+          name="Detail"
+          component={ItemDetail}
+          sharedElementsConfig={(route) => {
+            const { item } = route.params;
+            return [`item.${item.id}.photo`];
+          }}
+          options={() => ({
+            gestureEnabled: false,
+            transitionSpec: {
+              open: { animation: "timing", config: { duration: 500 } },
+              close: { animation: "timing", config: { duration: 500 } },
+            },
+            cardStyleInterpolator: ({ current: { progress } }) => {
+              return {
+                cardStyle: {
+                  opacity: progress,
+                },
+              };
+            },
+          })}
+        />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    fontSize: 120,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});
