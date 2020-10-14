@@ -1,7 +1,13 @@
-import { ADD_GROCERY_ITEM, REMOVE_GROCERY_ITEM } from "../actions/types";
+import {
+  ADD_TO_CART,
+  ADD_GROCERY_ITEM,
+  REMOVE_GROCERY_ITEM,
+  REMOVE_FROM_CART,
+} from "../actions/types";
 
 export const INITIAL_STATE = {
   groceryItems: [],
+  cart: {},
 };
 
 const groceryReducer = (state = INITIAL_STATE, { type, payload }) => {
@@ -20,6 +26,32 @@ const groceryReducer = (state = INITIAL_STATE, { type, payload }) => {
         groceryItems: state.groceryItems.filter(
           (item) => item.key !== payload.key
         ),
+      };
+    case ADD_TO_CART:
+      const newCart = { ...state.cart };
+      if (newCart[payload.id]) {
+        newCart[payload.id]++;
+      } else {
+        newCart[payload.id] = 1;
+      }
+      return {
+        ...state,
+        cart: { ...newCart },
+      };
+    case REMOVE_FROM_CART:
+      const newCart2 = { ...state.cart };
+      if (newCart2[payload.id]) {
+        if (newCart2[payload.id] <= 1) {
+          newCart2[payload.id] = 0;
+        } else {
+          newCart2[payload.id]--;
+        }
+      } else {
+        newCart2[payload.id] = 0;
+      }
+      return {
+        ...state,
+        cart: { ...newCart2 },
       };
     default:
       return state;
