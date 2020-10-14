@@ -10,13 +10,10 @@ function ItemDetail({
     params: { item },
   },
 }) {
+  const { id, name, price, image, weight } = item;
   return (
     <View style={styles.container}>
-      <TouchableOpacity
-        onPress={() => {
-          navigation.goBack();
-        }}
-      >
+      <TouchableOpacity onPress={() => navigation.goBack()}>
         <FontAwesome5
           style={{ margin: 12 }}
           name="chevron-left"
@@ -24,11 +21,22 @@ function ItemDetail({
           size={24}
         />
       </TouchableOpacity>
-      <SharedElement id={`item.${item.id}.photo`}>
-        <Image style={styles.box} source={item.image} resizeMode="contain" />
+      <SharedElement id={`item.${id}.photo`}>
+        <Image style={styles.box} source={image} resizeMode="contain" />
       </SharedElement>
       <View style={{ padding: 8 }}>
-        <Text style={styles.title}>{item.name}</Text>
+        <Text style={styles.title}>{name}</Text>
+        <View style={styles.priceWrapper}>
+          <FontAwesome5
+            size={18}
+            color="#424242"
+            name="rupee-sign"
+            style={{ paddingTop: 4, paddingRight: 2 }}
+          />
+          <Text style={styles.price}>{price}</Text>
+        </View>
+
+        <Text style={styles.weight}>{weight}</Text>
         <Text style={styles.about}>About this product</Text>
         <Text style={styles.desc}>
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Adipisci eum
@@ -51,7 +59,7 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 16,
     alignItems: "flex-start",
-    backgroundColor: "#EEEEEE",
+    backgroundColor: "#F2F2F2",
     justifyContent: "flex-start",
   },
   text: {
@@ -61,7 +69,7 @@ const styles = StyleSheet.create({
   about: {
     fontFamily: "Montserrat-SemiBold",
     fontSize: 18,
-    marginTop: 24,
+    marginTop: 32,
   },
   desc: {
     fontFamily: "Montserrat-Regular",
@@ -71,6 +79,20 @@ const styles = StyleSheet.create({
   title: {
     fontFamily: "Montserrat-SemiBold",
     fontSize: 40,
+  },
+  priceWrapper: {
+    flexDirection: "row",
+    paddingLeft: 2,
+    paddingTop: 4,
+  },
+  price: {
+    fontSize: 20,
+    fontFamily: "Montserrat-SemiBold",
+  },
+  weight: {
+    fontSize: 16,
+    fontFamily: "Montserrat-Regular",
+    paddingTop: 4,
   },
   box: {
     height: 160,

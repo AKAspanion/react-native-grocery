@@ -5,7 +5,8 @@ import * as Service from "../services/";
 export default function useSearch(
   functionName,
   searchText = "",
-  interval = 500
+  type,
+  interval = 250
 ) {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -19,7 +20,7 @@ export default function useSearch(
 
           if (!apiFunction) return;
 
-          const { data } = await apiFunction(searchText);
+          const { data } = await apiFunction(searchText, type);
           setData(() => [...data]);
         } catch (err) {
           setData([]);
@@ -30,7 +31,7 @@ export default function useSearch(
     }, interval);
 
     return () => clearTimeout(timer);
-  }, [searchText]);
+  }, [searchText, type]);
 
   return { data, loading };
 }

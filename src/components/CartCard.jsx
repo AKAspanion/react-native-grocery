@@ -5,7 +5,7 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import { SharedElement } from "react-navigation-shared-element";
 
 export default function CartCard({ navigation, data, cart, onUpdate }) {
-  const { id, name, image, color, price } = data;
+  const { id, name, image, color, price, weight } = data;
 
   const handleUpdate = (type) => {
     if (!onUpdate) return;
@@ -31,16 +31,16 @@ export default function CartCard({ navigation, data, cart, onUpdate }) {
               style={styles.countIcon}
               onPress={() => handleUpdate("PLUS")}
             >
-              <FontAwesome5 name="plus" size={12} color="#424242" />
+              <FontAwesome5 name="plus" size={12} color="#FFFFFF" />
             </TouchableOpacity>
             <Text style={styles.count}>{cart[id]}</Text>
             <TouchableOpacity
               style={styles.countIcon}
               onPress={() => handleUpdate("MINUS")}
             >
-              <FontAwesome5 name="minus" size={12} color="#424242" />
+              <FontAwesome5 name="minus" size={12} color="#FFFFFF" />
             </TouchableOpacity>
-            <Text style={styles.weight}>x weight</Text>
+            <Text style={styles.weight}>x {weight}</Text>
           </View>
         </View>
       </View>
@@ -53,7 +53,7 @@ export default function CartCard({ navigation, data, cart, onUpdate }) {
         />
         <Text style={styles.price}>{price * cart[id]}</Text>
         <TouchableOpacity onPress={() => handleUpdate("DELETE")}>
-          <FontAwesome5 name="trash-alt" size={24} color="#424242" />
+          <FontAwesome5 name="trash-alt" size={20} color="#424242" />
         </TouchableOpacity>
       </View>
     </View>
@@ -115,7 +115,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   countIcon: {
-    backgroundColor: "#eee",
+    backgroundColor: "#655DB0",
     borderRadius: 4,
     paddingLeft: 5,
     paddingRight: 5,

@@ -26,8 +26,8 @@ export default function MainContainer() {
   const stackOptions = () => ({
     gestureEnabled: false,
     transitionSpec: {
-      open: { animation: "timing", config: { duration: 500 } },
-      close: { animation: "timing", config: { duration: 500 } },
+      open: { animation: "timing", config: { duration: 400 } },
+      close: { animation: "timing", config: { duration: 400 } },
     },
     cardStyleInterpolator: ({ current: { progress } }) => ({
       cardStyle: {

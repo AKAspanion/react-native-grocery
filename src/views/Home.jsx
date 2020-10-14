@@ -1,19 +1,31 @@
 import React, { useState } from "react";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { useDispatch, useSelector } from "react-redux";
-import { StyleSheet, View, ScrollView, Text } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  ScrollView,
+  ActivityIndicator,
+} from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
 import { useSearch } from "../hooks/";
-import { TextField, ItemCard } from "../components";
+import { TextField, ItemCard, StoreToggle, EmptyState } from "../components";
 import { addToCart, removeFromCart } from "../store/actions/grocery";
 
 export default function Home({ navigation }) {
   const dispatch = useDispatch();
   const { cart } = useSelector((state) => state.groceryState);
 
+  const [active, setActive] = useState("FRUIT");
+
   const [searchText, changeSearchText] = useState("");
-  const { data: fruits, loading } = useSearch("getGroceryItems", searchText);
+  const { data: fruits, loading } = useSearch(
+    "getGroceryItems",
+    searchText,
+    active
+  );
 
   const totalCartCount = Object.keys(cart).reduce((a, b) => a + cart[b], 0);
 
@@ -28,13 +40,13 @@ export default function Home({ navigation }) {
   return (
     <View style={styles.container}>
       <View style={styles.topBar}>
-        <FontAwesome5 name="user-circle" size={24} color="#424242" />
+        <FontAwesome5 name="user-circle" size={24} color="#655DB0" />
         <Text style={styles.heading}>Grocery</Text>
         <View>
           <TouchableOpacity
             onPress={() => navigation.push("Cart", { item: { cart } })}
           >
-            <FontAwesome5 name="shopping-basket" size={24} color="#424242" />
+            <FontAwesome5 name="shopping-basket" size={24} color="#655DB0" />
           </TouchableOpacity>
           {totalCartCount ? (
             <View style={styles.badge}>
@@ -48,15 +60,20 @@ export default function Home({ navigation }) {
         placeholder="Search"
         onChange={changeSearchText}
       />
+      <StoreToggle active={active} onToggle={(type) => setActive(type)} />
       {loading ? (
-        <Text>Loading</Text>
+        <EmptyState>
+          <ActivityIndicator size="large" color="#424242" />
+        </EmptyState>
+      ) : !fruits.length ? (
+        <EmptyState />
       ) : (
         <ScrollView style={{ marginTop: 24 }}>
           <View
             style={{
               margin: -8,
               flexWrap: "wrap",
-              paddingBottom: 120,
+              paddingBottom: 172,
               flexDirection: "row",
             }}
           >
@@ -86,7 +103,7 @@ export default function Home({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     padding: 16,
-    backgroundColor: "#EEEEEE",
+    backgroundColor: "#F2F2F2",
   },
   topBar: {
     paddingTop: 8,

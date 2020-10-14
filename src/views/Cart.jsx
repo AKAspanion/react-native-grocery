@@ -10,7 +10,7 @@ import {
   clearFromCart,
   removeFromCart,
 } from "../store/actions/grocery";
-import { CartCard } from "../components";
+import { CartCard, EmptyState } from "../components";
 
 function Cart({ navigation }) {
   const dispatch = useDispatch();
@@ -41,6 +41,8 @@ function Cart({ navigation }) {
     }
   };
 
+  const total = items.reduce((a, b) => a + cart[b.id] * b.price, 0);
+
   return (
     <View style={{ ...styles.container, minHeight: windowHeight }}>
       <View style={styles.topBar}>
@@ -67,9 +69,67 @@ function Cart({ navigation }) {
                 onUpdate={handleUpdate}
               ></CartCard>
             ))}
+            <View
+              style={{
+                padding: 16,
+                paddingVertical: 24,
+                minWidth: "100%",
+                flexDirection: "row",
+                justifyContent: "space-between",
+              }}
+            >
+              <Text
+                style={{
+                  fontSize: 24,
+                  color: "#424242",
+                  fontFamily: "Montserrat-Regular",
+                }}
+              >
+                Total
+              </Text>
+              <View style={{ flexDirection: "row", alignContent: "center" }}>
+                <FontAwesome5
+                  size={20}
+                  color="#424242"
+                  name="rupee-sign"
+                  style={{ paddingTop: 7, paddingRight: 2 }}
+                />
+                <Text
+                  style={{
+                    fontSize: 24,
+                    color: "#424242",
+                    fontFamily: "Montserrat-SemiBold",
+                  }}
+                >
+                  {total}
+                </Text>
+              </View>
+            </View>
+            <TouchableOpacity
+              style={{
+                backgroundColor: "#655DB0",
+                borderRadius: 16,
+                padding: 16,
+              }}
+            >
+              <Text
+                style={{
+                  fontSize: 18,
+                  color: "#FFFFFF",
+                  textAlign: "center",
+                  fontFamily: "Montserrat-SemiBold",
+                }}
+              >
+                PLACE ORDER
+              </Text>
+            </TouchableOpacity>
           </View>
         ) : (
-          <Text>Empty</Text>
+          <EmptyState
+            type="cart"
+            message="No Items in cart"
+            description="When you are ready, go ahead and add some"
+          />
         )}
       </ScrollView>
     </View>
@@ -90,7 +150,7 @@ Cart.sharedElements = (route) => {
 const styles = StyleSheet.create({
   container: {
     padding: 16,
-    backgroundColor: "#EEEEEE",
+    backgroundColor: "#F2F2F2",
   },
   topBar: {
     minWidth: "100%",
