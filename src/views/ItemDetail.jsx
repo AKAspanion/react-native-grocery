@@ -82,7 +82,6 @@ const styles = StyleSheet.create({
     marginTop: 24,
     marginBottom: 48,
     maxWidth: "100%",
-    borderRadius: 100,
   },
 });
 
