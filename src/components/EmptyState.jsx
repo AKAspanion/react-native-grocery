@@ -18,13 +18,17 @@ export default function EmptyState({
     <View style={styles.empty}>
       {children || [
         <Image
+          key={1}
           style={styles.image}
           resizeMode="contain"
           source={images[type] || noResult}
         />,
-
-        <Text style={styles.message}>{message}</Text>,
-        <Text style={styles.desc}>{description}</Text>,
+        <Text key={2} style={styles.message}>
+          {message}
+        </Text>,
+        <Text key={3} style={styles.desc}>
+          {description}
+        </Text>,
       ]}
     </View>
   );
