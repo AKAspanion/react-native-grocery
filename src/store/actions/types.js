@@ -4,6 +4,7 @@ export const ADD_GROCERY_ITEM = "ADD_GROCERY_ITEM";
 export const REMOVE_GROCERY_ITEM = "REMOVE_GROCERY_ITEM";
 
 export const ADD_TO_CART = "ADD_TO_CART";
+export const CLEAR_FROM_CART = "CLEAR_FROM_CART";
 export const REMOVE_FROM_CART = "REMOVE_FROM_CART";
 
 export const SET_ON_BOARDED = "SET_ON_BOARDED";

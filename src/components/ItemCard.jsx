@@ -1,6 +1,6 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { FontAwesome } from "@expo/vector-icons";
+import { FontAwesome5 } from "@expo/vector-icons";
 import { Text, View, StyleSheet, Image } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { SharedElement } from "react-navigation-shared-element";
@@ -42,10 +42,10 @@ export default function ItemCard({ data, onUpdate, navigation }) {
       >
         <View>
           <View style={styles.priceWrapper}>
-            <FontAwesome
+            <FontAwesome5
               size={18}
-              name="rupee"
-              color="black"
+              name="rupee-sign"
+              color="#424242"
               style={{ paddingTop: 3 }}
             />
             <Text style={styles.price}> {price}</Text>
@@ -79,13 +79,13 @@ export default function ItemCard({ data, onUpdate, navigation }) {
               style={styles.countIcon}
               onPress={() => handleOnPress("PLUS")}
             >
-              <FontAwesome name="plus" size={12} color="#424242" />
+              <FontAwesome5 name="plus" size={12} color="#424242" />
             </TouchableOpacity>
             <TouchableOpacity
               style={{ ...styles.countIcon, marginTop: 3 }}
               onPress={() => handleOnPress("MINUS")}
             >
-              <FontAwesome name="minus" size={12} color="#424242" />
+              <FontAwesome5 name="minus" size={12} color="#424242" />
             </TouchableOpacity>
           </View>
         </View>

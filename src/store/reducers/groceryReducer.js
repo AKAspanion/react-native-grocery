@@ -1,8 +1,9 @@
 import {
   ADD_TO_CART,
   ADD_GROCERY_ITEM,
-  REMOVE_GROCERY_ITEM,
+  CLEAR_FROM_CART,
   REMOVE_FROM_CART,
+  REMOVE_GROCERY_ITEM,
 } from "../actions/types";
 
 export const INITIAL_STATE = {
@@ -52,6 +53,15 @@ const groceryReducer = (state = INITIAL_STATE, { type, payload }) => {
       return {
         ...state,
         cart: { ...newCart2 },
+      };
+    case CLEAR_FROM_CART:
+      const newCart3 = { ...state.cart };
+      if (newCart3[payload.id]) {
+        newCart3[payload.id] = 0;
+      }
+      return {
+        ...state,
+        cart: { ...newCart3 },
       };
     default:
       return state;

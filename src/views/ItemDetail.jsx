@@ -20,19 +20,13 @@ function ItemDetail({
         <FontAwesome5
           style={{ margin: 12 }}
           name="chevron-left"
-          color="black"
+          color="#424242"
           size={24}
         />
       </TouchableOpacity>
-      <TouchableOpacity
-        onPress={() => {
-          navigation.push("Cart", { item });
-        }}
-      >
-        <SharedElement id={`item.${item.id}.photo`}>
-          <Image style={styles.box} source={item.image} resizeMode="contain" />
-        </SharedElement>
-      </TouchableOpacity>
+      <SharedElement id={`item.${item.id}.photo`}>
+        <Image style={styles.box} source={item.image} resizeMode="contain" />
+      </SharedElement>
       <View style={{ padding: 8 }}>
         <Text style={styles.title}>{item.name}</Text>
         <Text style={styles.about}>About this product</Text>
@@ -55,9 +49,10 @@ ItemDetail.sharedElements = (route) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "flex-start",
-    alignItems: "flex-start",
     padding: 16,
+    alignItems: "flex-start",
+    backgroundColor: "#EEEEEE",
+    justifyContent: "flex-start",
   },
   text: {
     padding: 25,

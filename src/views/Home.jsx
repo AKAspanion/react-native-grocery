@@ -13,7 +13,7 @@ export default function Home({ navigation }) {
   const { cart } = useSelector((state) => state.groceryState);
 
   const [searchText, changeSearchText] = useState("");
-  const { data: fruits, loading } = useSearch("getFruits", searchText);
+  const { data: fruits, loading } = useSearch("getGroceryItems", searchText);
 
   const totalCartCount = Object.keys(cart).reduce((a, b) => a + cart[b], 0);
 
@@ -31,7 +31,9 @@ export default function Home({ navigation }) {
         <FontAwesome5 name="user-circle" size={24} color="#424242" />
         <Text style={styles.heading}>Grocery</Text>
         <View>
-          <TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => navigation.push("Cart", { item: { cart } })}
+          >
             <FontAwesome5 name="shopping-basket" size={24} color="#424242" />
           </TouchableOpacity>
           {totalCartCount ? (
@@ -84,6 +86,7 @@ export default function Home({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     padding: 16,
+    backgroundColor: "#EEEEEE",
   },
   topBar: {
     paddingTop: 8,
@@ -101,10 +104,10 @@ const styles = StyleSheet.create({
     fontFamily: "Montserrat-SemiBold",
   },
   badge: {
-    top: -8,
-    left: -6,
-    width: 20,
-    height: 20,
+    top: -10,
+    left: -10,
+    width: 18,
+    height: 18,
     color: "red",
     borderRadius: 20,
     alignItems: "center",
