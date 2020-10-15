@@ -1,10 +1,10 @@
 import React, { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { NavigationContainer } from "@react-navigation/native";
 import { createSharedElementStackNavigator } from "react-navigation-shared-element";
 
 import { getOnboardFlag } from "../services";
-import { Home, Cart, ItemDetail } from "../views";
+import { Home, Cart, ItemDetail, OnBoarding } from "../views";
 import { setOnBoarded } from "../store/actions/flags";
 
 const Stack = createSharedElementStackNavigator();
@@ -12,14 +12,12 @@ const Stack = createSharedElementStackNavigator();
 export default function MainContainer() {
   const dispatch = useDispatch();
 
-  const setOnBoardedFlag = (flag) => {
-    dispatch(setOnBoarded(flag));
-  };
+  const { onBoarded } = useSelector((state) => state.flagsState);
 
   useEffect(() => {
     (async () => {
       const flag = await getOnboardFlag();
-      setOnBoardedFlag(flag === "DONE");
+      dispatch(setOnBoarded(flag === "DONE"));
     })();
   }, []);
 
@@ -38,7 +36,11 @@ export default function MainContainer() {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Home" headerMode="none">
+      <Stack.Navigator
+        headerMode="none"
+        initialRouteName={onBoarded ? "Home" : "OnBoarding"}
+      >
+        <Stack.Screen name="OnBoarding" component={OnBoarding} />
         <Stack.Screen name="Home" component={Home} />
         <Stack.Screen
           name="Detail"
