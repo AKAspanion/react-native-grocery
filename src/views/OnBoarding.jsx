@@ -1,10 +1,30 @@
 import React, { useRef, useState } from "react";
 import { FontAwesome5 } from "@expo/vector-icons";
-import { Text, View, StyleSheet, Animated } from "react-native";
+import { Text, Image, View, StyleSheet, Animated } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import { setOnboardFlag } from "../services";
 
-export default function OnBoarding() {
+const meta = {
+  0: {
+    title: "Relax and Shop",
+    image: require("../../assets/images/relax-home.png"),
+    subtitle: "Shop online and get groceries delivered from store to your home",
+  },
+  1: {
+    title: "No waiting",
+    image: require("../../assets/images/no-wait.png"),
+    subtitle: "Orders delivered to your home in as fast as one hour",
+  },
+  2: {
+    title: "Fresh produce",
+    image: require("../../assets/images/fresh.png"),
+    subtitle: "Fresh fruits and veggies are handpicked daily from local farms",
+  },
+};
+
+export default function OnBoarding({ navigation }) {
   const [index, setIndex] = useState(0);
+  const [metaIndex, setMetaIndex] = useState(0);
   const animatedValue = useRef(new Animated.Value(0)).current;
 
   const viewBgRange = ["#655DB0", "#655DB0", "#655DB0", "#F2F2F2", "#F2F2F2"];
@@ -18,7 +38,17 @@ export default function OnBoarding() {
     });
 
   const onPress = () => {
+    if (index >= 2) {
+      (async () => {
+        await setOnboardFlag();
+        navigation.push("Home");
+      })();
+      return;
+    }
     setIndex((value) => value + 1);
+    setTimeout(() => {
+      setMetaIndex((value) => value + 1);
+    }, 450);
     animateSlider().reset();
     animateSlider().start();
   };
@@ -43,7 +73,27 @@ export default function OnBoarding() {
         style={[styles.buttonContainer, { backgroundColor: containerBg }]}
       >
         <View style={styles.contentBox}>
-          <Text>Help</Text>
+          <Image
+            resizeMode="contain"
+            style={{ height: 200, maxWidth: "100%" }}
+            source={meta[metaIndex || 0].image}
+          />
+          <Text
+            style={[
+              styles.title,
+              { color: metaIndex === 1 ? "#FFFFFF" : "#222222" },
+            ]}
+          >
+            {meta[metaIndex || 0].title}
+          </Text>
+          <Text
+            style={[
+              styles.subtitle,
+              { color: metaIndex === 1 ? "#FFFFFF" : "#222222" },
+            ]}
+          >
+            {meta[metaIndex || 0].subtitle}
+          </Text>
         </View>
         <Animated.View
           style={[
@@ -118,8 +168,23 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
+  title: {
+    fontSize: 24,
+    paddingTop: 32,
+    textAlign: "center",
+    fontFamily: "Montserrat-SemiBold",
+  },
+  subtitle: {
+    fontSize: 13,
+    paddingTop: 12,
+    textAlign: "center",
+    paddingHorizontal: 32,
+    fontFamily: "Montserrat-Regular",
+  },
   contentBox: {
+    paddingHorizontal: 24,
     paddingTop: 100,
+    maxWidth: "80%",
   },
   buttonContainer: {
     flex: 1,
