@@ -1,3 +1,6 @@
 # react-native-grocery
 
-A grocery app made with React Native.
+A grocery app prototype design made with React Native.
+
+
+![Grocery](gif/demo.gif "Grocery App")
